@@ -1,7 +1,7 @@
 name: Terraform Deploy & Destroy
 
 on:
-  workflow_dispatch:
+  push:
     inputs:
       action:
         description: 'Choose Terraform Action'
