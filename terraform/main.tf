@@ -106,7 +106,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_ssh_key {
     username   = "azureuser"
     # Using forward slashes for the path to avoid escape character issues
-    public_key = file("C:/Users/ankit/.ssh/id_rsa.pub")
+    public_key = var.public_key
   }
 
   os_disk {
