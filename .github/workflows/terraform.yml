@@ -1,20 +1,10 @@
-name: Terraform Deploy & Destroy
+name: Terraform CI/CD
 
 on:
   push:
     branches:
       - master
-
-  workflow_dispatch:
-    inputs:
-      action:
-        description: 'Choose Terraform Action'
-        required: true
-        default: 'apply'
-        type: choice
-        options:
-          - apply
-          - destroy
+      - destroy
 
 jobs:
   terraform:
@@ -52,9 +42,9 @@ jobs:
         run: terraform plan -refresh=false
 
       - name: Terraform Apply
-        if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply'
+        if: github.ref == 'refs/heads/master'
         run: terraform apply -auto-approve
 
       - name: Terraform Destroy
-        if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'
+        if: github.ref == 'refs/heads/destroy'
         run: terraform destroy -auto-approve
