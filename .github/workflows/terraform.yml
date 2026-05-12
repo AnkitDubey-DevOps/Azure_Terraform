@@ -2,6 +2,10 @@ name: Terraform Deploy & Destroy
 
 on:
   push:
+    branches:
+      - master
+
+  workflow_dispatch:
     inputs:
       action:
         description: 'Choose Terraform Action'
@@ -45,13 +49,12 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        if: github.event.inputs.action == 'apply'
-        run: terraform plan -out=tfplan
+        run: terraform plan -refresh=false
 
       - name: Terraform Apply
-        if: github.event.inputs.action == 'apply'
-        run: terraform apply -auto-approve tfplan
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply'
+        run: terraform apply -auto-approve
 
       - name: Terraform Destroy
-        if: github.event.inputs.action == 'destroy'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'
         run: terraform destroy -auto-approve
