@@ -92,7 +92,7 @@ resource "azurerm_network_interface_security_group_association" "assoc" {
 # =========================
 # Linux Virtual Machine
 # =========================
-/*resource "azurerm_linux_virtual_machine" "vm" {
+resource "azurerm_linux_virtual_machine" "vm" {
   name                = "terraform-vm"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -123,4 +123,4 @@ resource "azurerm_network_interface_security_group_association" "assoc" {
 
   # Ensure the NIC is associated with the NSG before creating the VM
   depends_on = [azurerm_network_interface_security_group_association.assoc]
-}*/
+}
